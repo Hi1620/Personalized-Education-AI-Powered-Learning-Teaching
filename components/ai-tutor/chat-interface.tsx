@@ -1,7 +1,5 @@
 "use client"
 
-import type React from "react"
-
 import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -57,7 +55,7 @@ export function ChatInterface() {
       timestamp: new Date(),
     }
 
-    setMessages((prev) => [...prev, userMessage])
+    setMessages((prev: Message[]) => [...prev, userMessage])
     setInput("")
     setIsLoading(true)
 
@@ -86,7 +84,7 @@ export function ChatInterface() {
         timestamp: new Date(),
       }
 
-      setMessages((prev) => [...prev, assistantMessage])
+      setMessages((prev: Message[]) => [...prev, assistantMessage])
     } catch (error) {
       console.error("Error sending message:", error)
       const errorMessage: Message = {
@@ -95,7 +93,7 @@ export function ChatInterface() {
         role: "assistant",
         timestamp: new Date(),
       }
-      setMessages((prev) => [...prev, errorMessage])
+      setMessages((prev: Message[]) => [...prev, errorMessage])
     } finally {
       setIsLoading(false)
     }
@@ -133,7 +131,7 @@ export function ChatInterface() {
         <CardContent className="flex-1 flex flex-col p-0">
           <ScrollArea ref={scrollAreaRef} className="flex-1 p-4">
             <div className="space-y-4">
-              {messages.map((message) => (
+              {messages.map((message: Message) => (
                 <ChatMessage key={message.id} message={message} />
               ))}
               {isLoading && <TypingIndicator />}
@@ -146,7 +144,7 @@ export function ChatInterface() {
             <form onSubmit={handleSubmit} className="flex space-x-2 mt-4">
               <Input
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
                 placeholder="Ask me anything about your studies..."
                 disabled={isLoading}
                 className="flex-1"
